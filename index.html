@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O'212 - Pizza Feu de Bois & Crêperie | Guyancourt</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-wrapper">
+            <div class="nav-logo">
+                <span class="logo-text">O'212</span>
+                <span class="logo-subtitle">Pizzeria</span>
+            </div>
+            <div class="nav-links">
+                <a href="#hero" class="nav-link">Accueil</a>
+                <a href="#specialites" class="nav-link">Spécialités</a>
+                <a href="#menu" class="nav-link">Menu</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <a href="tel:0187088044" class="nav-btn">Commander</a>
+        </div>
+    </nav>
+
+    <!-- Hero Parallax Section -->
+    <section id="hero" class="hero-parallax">
+        <div class="parallax-header">
+            <h1 class="parallax-title">
+                <span class="title-line">Authentique</span>
+                <span class="title-line main">Pizza au Feu de Bois</span>
+                <span class="title-line">Tradition Napolitaine à Guyancourt</span>
+            </h1>
+            <p class="parallax-subtitle">Découvrez nos créations artisanales cuites à 450°C</p>
+        </div>
+
+        <div class="parallax-grid" id="parallax-grid">
+            <!-- Row 1 -->
+            <div class="parallax-row row-1">
+                <div class="parallax-card" data-speed="0.3">
+                    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80" alt="Pizza Margherita">
+                    <div class="card-overlay">
+                        <h3>Margherita</h3>
+                        <p>Base sauce tomate, mozzarella, basilic</p>
+                        <span class="card-price">À partir de 9€</span>
+                    </div>
+                </div>
+                <div class="parallax-card" data-speed="0.5">
+                    <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&q=80" alt="Pizza Napolitaine">
+                    <div class="card-overlay">
+                        <h3>4 Fromages</h3>
+                        <p>Mozzarella, gorgonzola, chèvre, parmesan</p>
+                        <span class="card-price">À partir de 11€</span>
+                    </div>
+                </div>
+                <div class="parallax-card" data-speed="0.4">
+                    <img src="https://images.unsplash.com/photo-1571407970349-bc81e7e96a47?w=800&q=80" alt="Pizza Crème">
+                    <div class="card-overlay">
+                        <h3>Crème Fraîche</h3>
+                        <p>Base crème, poulet, champignons</p>
+                        <span class="card-price">À partir de 10€</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="parallax-row row-2">
+                <div class="parallax-card" data-speed="0.6">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80" alt="Four à bois">
+                    <div class="card-overlay">
+                        <h3>Four Traditionnel</h3>
+                        <p>Cuisson à 450°C pour une pâte parfaite</p>
+                    </div>
+                </div>
+                <div class="parallax-card featured" data-speed="0.2">
+                    <img src="https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?w=800&q=80" alt="Pizza Signature">
+                    <div class="card-overlay featured-overlay">
+                        <div class="featured-badge">★ Spécialité</div>
+                        <h3>Pizza O'212</h3>
+                        <p>Notre recette signature exclusive</p>
+                        <span class="card-price">14€</span>
+                    </div>
+                </div>
+                <div class="parallax-card" data-speed="0.5">
+                    <img src="https://images.unsplash.com/photo-1542834369-f10ebf06d3e0?w=800&q=80" alt="Ingrédients frais">
+                    <div class="card-overlay">
+                        <h3>Ingrédients Frais</h3>
+                        <p>Sélection quotidienne des meilleurs produits</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="parallax-row row-3">
+                <div class="parallax-card" data-speed="0.4">
+                    <img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=800&q=80" alt="Pizza artisanale">
+                    <div class="card-overlay">
+                        <h3>Calzone</h3>
+                        <p>Pizza pliée, garnie selon vos envies</p>
+                        <span class="card-price">À partir de 10€</span>
+                    </div>
+                </div>
+                <div class="parallax-card" data-speed="0.3">
+                    <img src="https://images.unsplash.com/photo-1519676867240-f03562e64548?w=800&q=80" alt="Crêpes">
+                    <div class="card-overlay">
+                        <h3>Crêperie</h3>
+                        <p>Crêpes sucrées et salées maison</p>
+                        <span class="card-price">À partir de 6€</span>
+                    </div>
+                </div>
+                <div class="parallax-card" data-speed="0.6">
+                    <img src="https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?w=800&q=80" alt="Pizza végétarienne">
+                    <div class="card-overlay">
+                        <h3>Végétarienne</h3>
+                        <p>Légumes grillés, mozzarella, pesto</p>
+                        <span class="card-price">À partir de 11€</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="parallax-row row-4">
+                <div class="parallax-card" data-speed="0.5">
+                    <img src="https://images.unsplash.com/photo-1593504049359-74330189a345?w=800&q=80" alt="Pizza fumée">
+                    <div class="card-overlay">
+                        <h3>Saumon Fumé</h3>
+                        <p>Crème, saumon, câpres, aneth</p>
+                        <span class="card-price">À partir de 13€</span>
+                    </div>
+                </div>
+                <div class="parallax-card" data-speed="0.4">
+                    <img src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?w=800&q=80" alt="Pizza épicée">
+                    <div class="card-overlay">
+                        <h3>Diavola</h3>
+                        <p>Tomate, mozzarella, salami piquant</p>
+                        <span class="card-price">À partir de 11€</span>
+                    </div>
+                </div>
+                <div class="parallax-card" data-speed="0.3">
+                    <img src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=800&q=80" alt="Ambiance restaurant">
+                    <div class="card-overlay">
+                        <h3>Expérience O'212</h3>
+                        <p>Ambiance chaleureuse et conviviale</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-prompt">
+            <span>Découvrez nos spécialités</span>
+            <div class="scroll-arrow">↓</div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-number" data-target="4.7">0</div>
+                    <div class="stat-label">Note Google</div>
+                    <div class="stat-sublabel">52 avis clients</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-number" data-target="450">0</div>
+                    <div class="stat-label">Degrés Celsius</div>
+                    <div class="stat-sublabel">Cuisson au feu de bois</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">🍕</div>
+                    <div class="stat-number" data-target="50">0</div>
+                    <div class="stat-label">Recettes</div>
+                    <div class="stat-sublabel">Pizzas & crêpes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">⏰</div>
+                    <div class="stat-number" data-target="7">0</div>
+                    <div class="stat-label">Jours / 7</div>
+                    <div class="stat-sublabel">11h - 22h</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specialites Section -->
+    <section id="specialites" class="specialites-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Nos Créations</span>
+                <h2 class="section-title">Pizzas au Feu de Bois</h2>
+                <p class="section-description">Chaque pizza est préparée avec passion et cuite dans notre four traditionnel</p>
+            </div>
+
+            <div class="specialites-grid">
+                <div class="specialite-card sauce-tomate">
+                    <div class="specialite-header">
+                        <div class="specialite-badge red">Base Sauce Tomate</div>
+                        <h3>Pizzas Classiques</h3>
+                    </div>
+                    <ul class="specialite-list">
+                        <li><strong>Margherita</strong> - Mozzarella, basilic frais</li>
+                        <li><strong>Napolitaine</strong> - Anchois, câpres, olives</li>
+                        <li><strong>Reine</strong> - Jambon, champignons</li>
+                        <li><strong>4 Saisons</strong> - Jambon, champignons, artichauts, olives</li>
+                        <li><strong>Végétarienne</strong> - Légumes grillés, pesto</li>
+                    </ul>
+                    <div class="specialite-price">À partir de 9€</div>
+                </div>
+
+                <div class="specialite-card creme-fraiche">
+                    <div class="specialite-header">
+                        <div class="specialite-badge blue">Base Crème Fraîche</div>
+                        <h3>Pizzas Crème</h3>
+                    </div>
+                    <ul class="specialite-list">
+                        <li><strong>Poulet Curry</strong> - Poulet, oignons, curry</li>
+                        <li><strong>4 Fromages</strong> - Mozzarella, gorgonzola, chèvre, parmesan</li>
+                        <li><strong>Savoyarde</strong> - Pommes de terre, lardons, reblochon</li>
+                        <li><strong>Saumon</strong> - Saumon fumé, aneth, câpres</li>
+                        <li><strong>Champignons</strong> - Mélange de champignons frais</li>
+                    </ul>
+                    <div class="specialite-price">À partir de 10€</div>
+                </div>
+
+                <div class="specialite-card crepes">
+                    <div class="specialite-header">
+                        <div class="specialite-badge gold">Crêperie</div>
+                        <h3>Crêpes Maison</h3>
+                    </div>
+                    <ul class="specialite-list">
+                        <li><strong>Complète</strong> - Jambon, fromage, œuf</li>
+                        <li><strong>Sucrée</strong> - Nutella, sucre, confiture</li>
+                        <li><strong>Normande</strong> - Pommes, calvados, caramel</li>
+                        <li><strong>Chèvre Miel</strong> - Fromage de chèvre, miel</li>
+                        <li><strong>Banane Chocolat</strong> - Banane, chocolat fondu</li>
+                    </ul>
+                    <div class="specialite-price">À partir de 6€</div>
+                </div>
+            </div>
+
+            <div class="formules-section">
+                <h3 class="formules-title">🍽️ Nos Formules</h3>
+                <div class="formules-grid">
+                    <div class="formule-card">
+                        <div class="formule-name">Formule Midi</div>
+                        <div class="formule-content">Pizza + Boisson</div>
+                        <div class="formule-price">12€</div>
+                    </div>
+                    <div class="formule-card featured">
+                        <div class="formule-badge">★ Populaire</div>
+                        <div class="formule-name">Formule Complète</div>
+                        <div class="formule-content">Pizza + Boisson + Dessert</div>
+                        <div class="formule-price">14€</div>
+                    </div>
+                    <div class="formule-card">
+                        <div class="formule-name">Menu Famille</div>
+                        <div class="formule-content">2 Pizzas + 2 Boissons</div>
+                        <div class="formule-price">25€</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h2 class="contact-title">Venez Nous Rendre Visite</h2>
+                    <p class="contact-subtitle">Commandez en ligne ou venez découvrir notre restaurant</p>
+                    
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <div class="info-icon">📍</div>
+                            <div class="info-content">
+                                <h4>Adresse</h4>
+                                <p>11 Allée du Commerce<br>78280 Guyancourt</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="info-icon">📞</div>
+                            <div class="info-content">
+                                <h4>Téléphone</h4>
+                                <p><a href="tel:0187088044">01 87 08 80 44</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="info-icon">⏰</div>
+                            <div class="info-content">
+                                <h4>Horaires</h4>
+                                <p><span class="open-status">Ouvert</span><br>Lundi - Dimanche<br>11h00 - 22h00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-actions">
+                        <a href="tel:0187088044" class="btn-contact primary">
+                            <span>📞</span>
+                            Appeler Maintenant
+                        </a>
+                        <a href="https://www.google.com/maps/place/11+All.+du+Commerce,+78280+Guyancourt" target="_blank" class="btn-contact secondary">
+                            <span>🗺️</span>
+                            Itinéraire
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact-map">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2631.4!2d2.0697!3d48.7744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDjCsDQ2JzI3LjgiTiAywrAwNCcxMS4wIkU!5e0!3m2!1sfr!2sfr!4v1234567890"
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="logo-text">O'212</span>
+                        <span class="logo-subtitle">Pizzeria</span>
+                    </div>
+                    <p>Salon de la Crêperie & Pizza Feu de Bois</p>
+                    <p class="footer-address">11 Allée du Commerce, 78280 Guyancourt</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="#hero">Accueil</a></li>
+                        <li><a href="#specialites">Spécialités</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="tel:0187088044">01 87 08 80 44</a></li>
+                        <li>Lun - Dim: 11h - 22h</li>
+                        <li>⭐ 4.7/5 (52 avis)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 O'212 Pizzeria. Tous droits réservés.</p>
+                <p class="footer-credit">Designed with ❤️ for authentic Italian cuisine</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
