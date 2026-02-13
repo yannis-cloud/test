@@ -1,488 +1,391 @@
-// ===========================
-// PARALLAX SCROLL EFFECTS
-// ===========================
+/* ============================= */
+/* SMOOTH SCROLL INERTIA (Framer Motion style) */
+/* ============================= */
 
-let scrollPosition = 0;
-let ticking = false;
+let scrollTarget = window.scrollY;
+let scrollCurrent = window.scrollY;
+const scrollEase = 0.08;
+
+function smoothScroll() {
+  scrollCurrent += (scrollTarget - scrollCurrent) * scrollEase;
+  
+  if (Math.abs(scrollTarget - scrollCurrent) < 0.5) {
+    scrollCurrent = scrollTarget;
+  }
+  
+  document.documentElement.style.setProperty('--scroll', scrollCurrent);
+  
+  requestAnimationFrame(smoothScroll);
+}
 
 window.addEventListener('scroll', () => {
-scrollPosition = window.pageYOffset;
-
-if (!ticking) {
-window.requestAnimationFrame(() => {
-updateParallax();
-ticking = false;
-});
-ticking = true;
-}
+  scrollTarget = window.scrollY;
 });
 
-function updateParallax() {
-// Pizza cards parallax
-const pizzaCards = document.querySelectorAll('.pizza-card');
+smoothScroll();
 
-pizzaCards.forEach(card => {
-const speed = parseFloat(card.dataset.speed) || 0.5;
-const rect = card.getBoundingClientRect();
-const scrollPercent = (window.innerHeight - rect.top) / window.innerHeight;
+/* ============================= */
+/* CURSOR GLOW WITH TRAIL */
+/* ============================= */
 
-if (scrollPercent > 0 && scrollPercent < 2) {
-const yPos = -(scrollPosition * speed * 0.3);
-card.style.transform = `translateY(${yPos}px)`;
-}
+const cursor = document.querySelector(".cursor");
+const cursorTrail = document.querySelector(".cursor-trail");
+
+let mouseX = 0;
+let mouseY = 0;
+let cursorX = 0;
+let cursorY = 0;
+
+document.addEventListener("mousemove", e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  
+  cursorTrail.style.left = e.clientX + "px";
+  cursorTrail.style.top = e.clientY + "px";
+  cursorTrail.style.opacity = "1";
 });
 
-// Background parallax
-const parallaxBg = document.querySelector('.parallax-bg');
-if (parallaxBg) {
-parallaxBg.style.transform = `translateY(${scrollPosition * 0.5}px)`;
-}
-}
-
-// ===========================
-// NAVBAR SCROLL EFFECT
-// ===========================
-
-const navbar = document.getElementById('navbar');
-let lastScroll = 0;
-
-window.addEventListener('scroll', () => {
-const currentScroll = window.pageYOffset;
-
-if (currentScroll > 100) {
-navbar.classList.add('scrolled');
-} else {
-navbar.classList.remove('scrolled');
+function animateCursor() {
+  const dx = mouseX - cursorX;
+  const dy = mouseY - cursorY;
+  
+  cursorX += dx * 0.1;
+  cursorY += dy * 0.1;
+  
+  cursor.style.left = cursorX + "px";
+  cursor.style.top = cursorY + "px";
+  
+  requestAnimationFrame(animateCursor);
 }
 
-lastScroll = currentScroll;
+animateCursor();
+
+// Enlarge cursor on hover
+document.querySelectorAll('a, button, .card, .tool').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '350px';
+    cursor.style.height = '350px';
+  });
+  
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '280px';
+    cursor.style.height = '280px';
+  });
 });
 
-// ===========================
-// SMOOTH SCROLL
-// ===========================
+/* ============================= */
+/* PROGRESSIVE TEXT TYPING EFFECT */
+/* ============================= */
+
+// Text appears progressively with CSS animation
+// The typewriter effect is handled by CSS @keyframes
+// No JavaScript needed for the main typing effect
+
+// But we can add sound effect or additional interactions here if needed
+const typewriterLine = document.querySelector('.typewriter-line');
+
+if (typewriterLine) {
+  // Add completion event
+  setTimeout(() => {
+    typewriterLine.style.borderRight = 'none';
+  }, 3000);
+}
+
+/* ============================= */
+/* REVEAL ON SCROLL */
+/* ============================= */
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((entry, index) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add("show");
+      }, index * 100);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll(".reveal").forEach(el => {
+  observer.observe(el);
+});
+
+/* ============================= */
+/* NAVBAR ACTIVE HIGHLIGHT */
+/* ============================= */
+
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll(".menu a");
+
+window.addEventListener("scroll", () => {
+  let current = "";
+  
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 200;
+    if (scrollY >= sectionTop) {
+      current = section.getAttribute("id");
+    }
+  });
+
+  navLinks.forEach(a => {
+    a.classList.remove("active");
+    if (a.getAttribute("href") === "#" + current) {
+      a.classList.add("active");
+    }
+  });
+});
+
+/* ============================= */
+/* PROGRESS BAR */
+/* ============================= */
+
+const progress = document.querySelector(".progress");
+
+window.addEventListener("scroll", () => {
+  const totalHeight = document.body.scrollHeight - window.innerHeight;
+  const progressHeight = (window.pageYOffset / totalHeight) * 100;
+  progress.style.width = progressHeight + "%";
+});
+
+/* ============================= */
+/* 3D TILT EFFECT ON CARDS */
+/* ============================= */
+
+const tiltElements = document.querySelectorAll("[data-tilt]");
+
+tiltElements.forEach(el => {
+  el.addEventListener("mousemove", handleTilt);
+  el.addEventListener("mouseleave", resetTilt);
+});
+
+function handleTilt(e) {
+  const rect = this.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+  
+  const rotateX = ((y - centerY) / centerY) * -10;
+  const rotateY = ((x - centerX) / centerX) * 10;
+  
+  this.style.transform = `
+    perspective(1000px) 
+    rotateX(${rotateX}deg) 
+    rotateY(${rotateY}deg) 
+    translateY(-8px)
+    scale3d(1.02, 1.02, 1.02)
+  `;
+  
+  // Update spotlight position
+  if (this.querySelector('.card-glow')) {
+    this.style.setProperty("--x", x + "px");
+    this.style.setProperty("--y", y + "px");
+  }
+}
+
+function resetTilt() {
+  this.style.transform = `
+    perspective(1000px) 
+    rotateX(0deg) 
+    rotateY(0deg) 
+    translateY(0px)
+    scale3d(1, 1, 1)
+  `;
+}
+
+/* ============================= */
+/* SPOTLIGHT EFFECT ON CARDS */
+/* ============================= */
+
+document.querySelectorAll(".spotlight, .card").forEach(card => {
+  card.addEventListener("mousemove", e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    card.style.setProperty("--x", x + "px");
+    card.style.setProperty("--y", y + "px");
+  });
+});
+
+/* ============================= */
+/* PARALLAX MESH BACKGROUND */
+/* ============================= */
+
+const mesh = document.querySelector(".mesh");
+
+window.addEventListener("scroll", () => {
+  const offset = window.scrollY * 0.3;
+  mesh.style.transform = `translateY(${offset}px)`;
+});
+
+/* ============================= */
+/* ENHANCED LOGO ANIMATION */
+/* ============================= */
+
+const logo = document.querySelector(".logo");
+
+if (logo) {
+  logo.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+}
+
+/* ============================= */
+/* SMOOTH ANCHOR LINKS */
+/* ============================= */
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-anchor.addEventListener('click', function (e) {
-e.preventDefault();
-const target = document.querySelector(this.getAttribute('href'));
-
-if (target) {
-const offsetTop = target.offsetTop - 80;
-window.scrollTo({
-top: offsetTop,
-behavior: 'smooth'
-});
-}
-});
-});
-
-// ===========================
-// STATS COUNTER ANIMATION
-// ===========================
-
-const animateCounter = (element) => {
-const target = parseFloat(element.dataset.target);
-const duration = 2000;
-const start = 0;
-const startTime = performance.now();
-
-const animate = (currentTime) => {
-const elapsed = currentTime - startTime;
-const progress = Math.min(elapsed / duration, 1);
-
-// Easing function
-const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-const current = start + (target - start) * easeOutQuart;
-
-// Format number based on target
-if (target % 1 !== 0) {
-element.textContent = current.toFixed(1);
-} else {
-element.textContent = Math.floor(current);
-}
-
-if (progress < 1) {
-requestAnimationFrame(animate);
-} else {
-element.textContent = target % 1 !== 0 ? target.toFixed(1) : target;
-}
-};
-
-requestAnimationFrame(animate);
-};
-
-// Intersection Observer for stats
-const statsObserver = new IntersectionObserver((entries) => {
-entries.forEach(entry => {
-if (entry.isIntersecting) {
-const statNumber = entry.target;
-animateCounter(statNumber);
-statsObserver.unobserve(statNumber);
-}
-});
-}, { threshold: 0.5 });
-
-document.querySelectorAll('.stat-number').forEach(stat => {
-statsObserver.observe(stat);
+  anchor.addEventListener("click", function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute("href"));
+    
+    if (target) {
+      const offsetTop = target.offsetTop - 100;
+      
+      window.scrollTo({
+        top: offsetTop,
+        behavior: "smooth"
+      });
+    }
+  });
 });
 
-// ===========================
-// MENU CATEGORY FILTER
-// ===========================
+/* ============================= */
+/* ENHANCED STATS COUNTER ANIMATION */
+/* ============================= */
 
-const categoryButtons = document.querySelectorAll('.category-btn');
-const menuItems = document.querySelectorAll('.menu-item');
+const statsObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const numbers = entry.target.querySelectorAll('.stat-number');
+      
+      numbers.forEach(num => {
+        const target = parseInt(num.getAttribute('data-target'));
+        let current = 0;
+        const increment = target / 60;
+        const duration = 2000;
+        const stepTime = duration / 60;
+        
+        const counter = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            if (target === 100) {
+              num.textContent = target + "%";
+            } else {
+              num.textContent = target + "+";
+            }
+            clearInterval(counter);
+          } else {
+            if (target === 100) {
+              num.textContent = Math.floor(current) + "%";
+            } else {
+              num.textContent = Math.floor(current) + "+";
+            }
+          }
+        }, stepTime);
+      });
+      
+      statsObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
 
-categoryButtons.forEach(button => {
-button.addEventListener('click', () => {
-const category = button.dataset.category;
-
-// Update active button
-categoryButtons.forEach(btn => btn.classList.remove('active'));
-button.classList.add('active');
-
-// Filter menu items
-menuItems.forEach(item => {
-const itemCategory = item.dataset.category;
-
-if (category === 'all' || itemCategory === category) {
-item.classList.remove('hidden');
-item.style.animation = 'none';
-setTimeout(() => {
-item.style.animation = 'fadeInUp 0.6s ease-out forwards';
-}, 10);
-} else {
-item.classList.add('hidden');
-}
-});
-});
-});
-
-// ===========================
-// GALLERY INFINITE SCROLL
-// ===========================
-
-const galleryTrack = document.getElementById('gallery-track');
-
-if (galleryTrack) {
-// Clone gallery items for seamless loop
-const galleryCards = Array.from(galleryTrack.children);
-galleryCards.forEach(card => {
-const clone = card.cloneNode(true);
-galleryTrack.appendChild(clone);
-});
+const heroStats = document.querySelector('.hero-stats');
+if (heroStats) {
+  statsObserver.observe(heroStats);
 }
 
-// ===========================
-// PIZZA CARDS MOUSE INTERACTION
-// ===========================
+/* ============================= */
+/* DYNAMIC GRADIENT MESH ANIMATION */
+/* ============================= */
 
-document.querySelectorAll('.pizza-card').forEach(card => {
-card.addEventListener('mousemove', (e) => {
-const rect = card.getBoundingClientRect();
-const x = e.clientX - rect.left;
-const y = e.clientY - rect.top;
+let meshTime = 0;
 
-const centerX = rect.width / 2;
-const centerY = rect.height / 2;
-
-const rotateX = (y - centerY) / 10;
-const rotateY = (centerX - x) / 10;
-
-card.style.transform = `
-perspective(1000px)
-rotateX(${rotateX}deg)
-rotateY(${rotateY}deg)
-translateY(-10px)
-scale(1.05)
-`;
-});
-
-card.addEventListener('mouseleave', () => {
-card.style.transform = '';
-});
-});
-
-// ===========================
-// MENU CARDS TILT EFFECT
-// ===========================
-
-document.querySelectorAll('.menu-item').forEach(card => {
-card.addEventListener('mousemove', (e) => {
-const rect = card.getBoundingClientRect();
-const x = e.clientX - rect.left;
-const y = e.clientY - rect.top;
-
-const centerX = rect.width / 2;
-const centerY = rect.height / 2;
-
-const rotateX = (y - centerY) / 20;
-const rotateY = (centerX - x) / 20;
-
-card.style.transform = `
-perspective(1000px)
-rotateX(${rotateX}deg)
-rotateY(${rotateY}deg)
-translateY(-10px)
-`;
-});
-
-card.addEventListener('mouseleave', () => {
-card.style.transform = '';
-});
-});
-
-// ===========================
-// INTERSECTION OBSERVER ANIMATIONS
-// ===========================
-
-const observerOptions = {
-threshold: 0.1,
-rootMargin: '0px 0px -50px 0px'
-};
-
-const fadeInObserver = new IntersectionObserver((entries) => {
-entries.forEach(entry => {
-if (entry.isIntersecting) {
-entry.target.style.opacity = '1';
-entry.target.style.transform = 'translateY(0)';
-}
-});
-}, observerOptions);
-
-// Observe elements
-const observeElements = [
-'.section-header',
-'.contact-item',
-'.stat-item'
-];
-
-observeElements.forEach(selector => {
-document.querySelectorAll(selector).forEach(el => {
-el.style.opacity = '0';
-el.style.transform = 'translateY(30px)';
-el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-fadeInObserver.observe(el);
-});
-});
-
-// ===========================
-// MOBILE MENU TOGGLE
-// ===========================
-
-const burger = document.getElementById('burger');
-const navLinks = document.querySelector('.nav-links');
-
-if (burger) {
-burger.addEventListener('click', () => {
-burger.classList.toggle('active');
-if (navLinks) {
-navLinks.classList.toggle('mobile-active');
-}
-});
+function animateMesh() {
+  meshTime += 0.001;
+  
+  const mesh = document.querySelector('.mesh');
+  if (mesh) {
+    const rotation = Math.sin(meshTime) * 10;
+    mesh.style.filter = `blur(${120 + Math.sin(meshTime * 2) * 20}px) hue-rotate(${rotation}deg)`;
+  }
+  
+  requestAnimationFrame(animateMesh);
 }
 
-// ===========================
-// PARALLAX MOUSE MOVE
-// ===========================
+animateMesh();
 
-document.addEventListener('mousemove', (e) => {
-const mouseX = e.clientX / window.innerWidth;
-const mouseY = e.clientY / window.innerHeight;
+/* ============================= */
+/* PERFORMANCE OPTIMIZATION */
+/* ============================= */
 
-// Move floating elements
-const floatItems = document.querySelectorAll('.float-item');
-floatItems.forEach((item, index) => {
-const speed = (index + 1) * 0.5;
-const x = (mouseX - 0.5) * speed * 50;
-const y = (mouseY - 0.5) * speed * 50;
-
-item.style.transform = `translate(${x}px, ${y}px)`;
-});
-});
-
-// ===========================
-// SCROLL PROGRESS INDICATOR
-// ===========================
-
-function createScrollProgress() {
-const progressBar = document.createElement('div');
-progressBar.style.cssText = `
-position: fixed;
-top: 0;
-left: 0;
-width: 0%;
-height: 3px;
-background: linear-gradient(90deg, var(--primary), var(--secondary));
-z-index: 9999;
-transition: width 0.1s ease;
-`;
-document.body.appendChild(progressBar);
-
-window.addEventListener('scroll', () => {
-const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-const scrolled = (window.pageYOffset / scrollHeight) * 100;
-progressBar.style.width = `${scrolled}%`;
-});
-}
-
-createScrollProgress();
-
-// ===========================
-// LAZY LOADING IMAGES
-// ===========================
-
-const imageObserver = new IntersectionObserver((entries, observer) => {
-entries.forEach(entry => {
-if (entry.isIntersecting) {
-const img = entry.target;
-img.src = img.dataset.src || img.src;
-img.classList.add('loaded');
-observer.unobserve(img);
-}
-});
-});
-
-document.querySelectorAll('img').forEach(img => {
-imageObserver.observe(img);
-});
-
-// ===========================
-// PERFORMANCE OPTIMIZATION
-// ===========================
-
-// Debounce function
+// Debounce function for scroll events
 function debounce(func, wait) {
-let timeout;
-return function executedFunction(...args) {
-const later = () => {
-clearTimeout(timeout);
-func(...args);
-};
-clearTimeout(timeout);
-timeout = setTimeout(later, wait);
-};
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
 }
 
-// Throttle function
-function throttle(func, limit) {
-let inThrottle;
-return function() {
-const args = arguments;
-const context = this;
-if (!inThrottle) {
-func.apply(context, args);
-inThrottle = true;
-setTimeout(() => inThrottle = false, limit);
-}
-};
-}
-
-// ===========================
-// PAGE LOAD ANIMATION
-// ===========================
-
-window.addEventListener('load', () => {
-document.body.style.opacity = '0';
-setTimeout(() => {
-document.body.style.transition = 'opacity 0.5s ease';
-document.body.style.opacity = '1';
-}, 100);
+// Lazy load images
+const imageObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const img = entry.target;
+      if (img.dataset.src) {
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+      }
+      observer.unobserve(img);
+    }
+  });
 });
 
-// ===========================
-// SCROLL TO TOP BUTTON
-// ===========================
-
-function createScrollToTop() {
-const button = document.createElement('button');
-button.innerHTML = 'â†‘';
-button.style.cssText = `
-position: fixed;
-bottom: 2rem;
-right: 2rem;
-width: 50px;
-height: 50px;
-border-radius: 50%;
-background: var(--primary);
-color: white;
-border: none;
-font-size: 1.5rem;
-cursor: pointer;
-opacity: 0;
-transition: all 0.3s ease;
-z-index: 999;
-box-shadow: 0 4px 20px rgba(230, 57, 70, 0.3);
-`;
-
-button.addEventListener('click', () => {
-window.scrollTo({
-top: 0,
-behavior: 'smooth'
-});
+document.querySelectorAll('img[data-src]').forEach(img => {
+  imageObserver.observe(img);
 });
 
-window.addEventListener('scroll', () => {
-if (window.pageYOffset > 500) {
-button.style.opacity = '1';
-button.style.pointerEvents = 'auto';
-} else {
-button.style.opacity = '0';
-button.style.pointerEvents = 'none';
-}
+/* ============================= */
+/* KEYBOARD NAVIGATION */
+/* ============================= */
+
+document.addEventListener('keydown', (e) => {
+  // ESC to scroll to top
+  if (e.key === 'Escape') {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
 });
 
-document.body.appendChild(button);
-}
+/* ============================= */
+/* CONSOLE EASTER EGG */
+/* ============================= */
 
-createScrollToTop();
-
-// ===========================
-// CONSOLE BRANDING
-// ===========================
-
-console.log('%cðŸ • O\'212 Pizzeria',
-'font-size: 24px; font-weight: bold; color: #E63946; text-shadow: 0 0 10px rgba(230,57,70,0.5);'
-);
-console.log('%cLanding Page v2.0',
-'font-size: 14px; color: #2A9D8F;'
-);
-console.log('%cDÃ©veloppÃ© avec â ¤ï¸ par Claude AI',
-'font-size: 12px; color: #888;'
+console.log(`
+%c
+  ╔═══════════════════════════════════════╗
+  ║                                       ║
+  ║   👋 Hi! I'm Yannis Albert           ║
+  ║   📊 Data, Analytics & AI Engineer   ║
+  ║   🚀 Building data-driven solutions  ║
+  ║                                       ║
+  ║   📧 yannis.albert78@gmail.com       ║
+  ║   💼 Open to opportunities           ║
+  ║                                       ║
+  ╚═══════════════════════════════════════╝
+`,
+'color: #2A7BFF; font-family: monospace; font-size: 12px; font-weight: bold;'
 );
 
-// ===========================
-// INITIALIZATION
-// ===========================
-
-document.addEventListener('DOMContentLoaded', () => {
-console.log('âœ… Site chargÃ© avec succÃ¨s');
-
-// Add loaded class to body
-setTimeout(() => {
-document.body.classList.add('loaded');
-}, 100);
-
-// Initialize all animations
-updateParallax();
-});
-
-// ===========================
-// ERROR HANDLING
-// ===========================
-
-window.addEventListener('error', (e) => {
-console.error('Erreur dÃ©tectÃ©e:', e.message);
-});
-
-// ===========================
-// RESIZE HANDLER
-// ===========================
-
-const handleResize = debounce(() => {
-// Update parallax on resize
-updateParallax();
-}, 250);
-
-window.addEventListener('resize', handleResize);
+console.log('%cLiked what you see? Let\'s connect! 🤝', 'color: #00D4FF; font-size: 16px; font-weight: bold;');
