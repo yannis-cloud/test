@@ -3,59 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ti Milo - Spécialités Antillaises Authentiques à Guyancourt. Bokits croustillants, saveurs caribéennes, ambiance chaleureuse.">
-    <meta name="keywords" content="Ti Milo, restaurant, Guyancourt, bokits, antilles, caribéen, restaurant antillais">
-    <meta name="author" content="Ti Milo - Spécialités Antillaises">
-    <meta name="theme-color" content="#FF5722">
-    
-    <title>Ti Milo - Spécialités Antillaises | Guyancourt</title>
+    <meta name="description" content="Ti Milo - Spécialités Antillaises Authentiques à Guyancourt">
+    <title>Ti Milo - Spécialités Antillaises</title>
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sora:wght@400;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- CSS Stylesheet -->
-    <link rel="stylesheet" href="styles.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="js/style.css">
 </head>
 <body>
     <!-- ========================================
          HEADER & NAVIGATION
          ======================================== -->
-    <header>
-        <nav>
-            <div class="logo">TI MILO</div>
-            <ul class="nav-links">
-                <li><a href="#menu">Menu</a></li>
-                <li><a href="#about">À Propos</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-text">Ti Milo</span>
+                <span class="logo-subtitle">ANTILLES</span>
+            </div>
+            
+            <nav class="nav">
+                <a href="#accueil" class="nav-link active">Accueil</a>
+                <a href="#menu" class="nav-link">Menu</a>
+                <a href="#histoire" class="nav-link">Notre Histoire</a>
+                <a href="#avis" class="nav-link">Avis</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+
+            <button class="btn-commander">
+                <span class="phone-icon">📞</span>
+                Commander
+            </button>
+        </div>
     </header>
 
     <!-- ========================================
          HERO SECTION
          ======================================== -->
-    <section class="hero">
-        <div class="hero-background"></div>
-        <div class="floating-shapes">
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
+    <section id="accueil" class="hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1200&q=80" alt="Bokit antillais" class="hero-image">
         </div>
 
         <div class="hero-content">
-            <h1>TI MILO</h1>
-            <div class="hero-subtitle">Spécialités Antillaises Authentiques</div>
-            <div class="hero-description">
-                Découvrez les saveurs caribéennes les plus authentiques à Guyancourt.
-                Des bokits croustillants, des portions généreuses et une ambiance chaleureuse qui vous dépaysera.
+            <div class="hero-badge">
+                <span class="star">⭐</span>
+                <span class="badge-text">4.8 — Restaurant Noté N°1 à Guyancourt</span>
             </div>
-            <div class="cta-buttons">
-                <button class="btn btn-primary">
-                    Découvrir le Menu
-                </button>
-                <button class="btn btn-secondary">
-                    Nous Contacter
-                </button>
+
+            <h1 class="hero-title">
+                <span class="hero-title-normal">Saveurs des</span>
+                <span class="hero-title-accent">Antilles</span>
+            </h1>
+
+            <p class="hero-description">
+                Bokits faits maison, poulet boucané et spécialités caribéennes authentiques. Un voyage gustatif au cœur des îles.
+            </p>
+
+            <div class="hero-address">
+                <span class="location-icon">📍</span>
+                25 Rue Ambroise Croizat, 78280 Guyancourt
+            </div>
+
+            <div class="hero-buttons">
+                <button class="btn btn-primary">Découvrir le Menu</button>
+                <button class="btn btn-secondary">Nous Trouver</button>
+            </div>
+
+            <div class="hero-scroll">
+                <span>↓</span>
             </div>
         </div>
     </section>
@@ -63,76 +81,125 @@
     <!-- ========================================
          MENU SECTION
          ======================================== -->
-    <section id="menu">
-        <div class="section-header">
-            <h2>Nos Spécialités</h2>
-            <div class="underline"></div>
-        </div>
-
-        <div class="menu-grid">
-            <!-- Menu Card 1 -->
-            <div class="menu-card">
-                <div class="menu-emoji">🥪</div>
-                <h3>Poulet Boucané</h3>
-                <p>Bokit croustillant garni de poulet fumé traditionnel, accompagné de frites de patate douce et sauce créole maison.</p>
-                <div class="menu-price">À partir de 8.50€</div>
+    <section id="menu" class="menu-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Nos Spécialités</h2>
+                <p class="section-subtitle">Découvrez nos délicieuses spécialités antillaises</p>
             </div>
 
-            <!-- Menu Card 2 -->
-            <div class="menu-card">
-                <div class="menu-emoji">🐟</div>
-                <h3>Kompa Freestyle</h3>
-                <p>Délicieux bokit à la morue fraîche, garni de crudités croquantes et d'une sauce épicée authentique.</p>
-                <div class="menu-price">À partir de 9.50€</div>
-            </div>
+            <div class="menu-grid">
+                <!-- Menu Item 1 -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <div class="menu-emoji">🥪</div>
+                    </div>
+                    <div class="menu-info">
+                        <h3>Poulet Boucané</h3>
+                        <p>Bokit croustillant garni de poulet fumé traditionnel</p>
+                        <div class="menu-price">À partir de 8.50€</div>
+                    </div>
+                </div>
 
-            <!-- Menu Card 3 -->
-            <div class="menu-card">
-                <div class="menu-emoji">🐑</div>
-                <h3>Spero Patronum</h3>
-                <p>Bokit généreux rempli d'agneau maison cuit lentement pour une tendresse incomparable.</p>
-                <div class="menu-price">À partir de 10.00€</div>
-            </div>
+                <!-- Menu Item 2 -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <div class="menu-emoji">🐟</div>
+                    </div>
+                    <div class="menu-info">
+                        <h3>Kompa Freestyle</h3>
+                        <p>Morue fraîche avec crudités et sauce épicée</p>
+                        <div class="menu-price">À partir de 9.50€</div>
+                    </div>
+                </div>
 
-            <!-- Menu Card 4 -->
-            <div class="menu-card">
-                <div class="menu-emoji">🍖</div>
-                <h3>KFZ Multi-Viandes</h3>
-                <p>Le roi des bokits ! Plusieurs viandes combinées pour un festin caribéen gourmand et inoubliable.</p>
-                <div class="menu-price">À partir de 11.00€</div>
+                <!-- Menu Item 3 -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <div class="menu-emoji">🐑</div>
+                    </div>
+                    <div class="menu-info">
+                        <h3>Spero Patronum</h3>
+                        <p>Agneau maison cuit lentement à la perfection</p>
+                        <div class="menu-price">À partir de 10.00€</div>
+                    </div>
+                </div>
+
+                <!-- Menu Item 4 -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <div class="menu-emoji">🍖</div>
+                    </div>
+                    <div class="menu-info">
+                        <h3>KFZ Multi-Viandes</h3>
+                        <p>Le roi des bokits avec plusieurs viandes</p>
+                        <div class="menu-price">À partir de 11.00€</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- ========================================
-         ABOUT SECTION
+         HISTOIRE SECTION
          ======================================== -->
-    <section id="about">
-        <div class="section-header">
-            <h2>Pourquoi Ti Milo</h2>
-            <div class="underline"></div>
+    <section id="histoire" class="histoire-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Notre Histoire</h2>
+                <p class="section-subtitle">Depuis 2024, nous apportons l'authenticité caribéenne à Guyancourt</p>
+            </div>
+
+            <div class="histoire-grid">
+                <div class="histoire-card">
+                    <div class="histoire-icon">🌺</div>
+                    <h3>Authenticité</h3>
+                    <p>Une cuisine antillaise véritable, préparée avec passion et savoir-faire traditionnel</p>
+                </div>
+
+                <div class="histoire-card">
+                    <div class="histoire-icon">😋</div>
+                    <h3>Générosité</h3>
+                    <p>Des portions généreuses qui rappellent la convivialité caribéenne et la famille</p>
+                </div>
+
+                <div class="histoire-card">
+                    <div class="histoire-icon">🎵</div>
+                    <h3>Ambiance</h3>
+                    <p>Une atmosphère chaleureuse agrémentée de musique créole pour un vrai dépaysement</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="about-grid">
-            <!-- About Card 1 -->
-            <div class="about-card">
-                <div class="about-icon">🌺</div>
-                <h3>Authenticité</h3>
-                <p>Une cuisine antillaise véritable, préparée avec passion et savoir-faire traditionnel depuis 2024.</p>
+    <!-- ========================================
+         AVIS SECTION
+         ======================================== -->
+    <section id="avis" class="avis-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Avis Clients</h2>
+                <p class="section-subtitle">Notés 4.8/5 par nos clients</p>
             </div>
 
-            <!-- About Card 2 -->
-            <div class="about-card">
-                <div class="about-icon">😋</div>
-                <h3>Générosité</h3>
-                <p>Des portions généreuses qui rappellent la convivialité caribéenne et la vraie cuisine de famille.</p>
-            </div>
+            <div class="avis-grid">
+                <div class="avis-card">
+                    <div class="avis-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="avis-text">"Excellents bokits, ambiance chaleureuse et personnel très accueillant!"</p>
+                    <p class="avis-author">- Michel D.</p>
+                </div>
 
-            <!-- About Card 3 -->
-            <div class="about-card">
-                <div class="about-icon">🎵</div>
-                <h3>Ambiance</h3>
-                <p>Une atmosphère chaleureuse agrémentée de musique créole pour un vrai dépaysement.</p>
+                <div class="avis-card">
+                    <div class="avis-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="avis-text">"Les saveurs authentiques des Antilles. Un vrai dépaysement!"</p>
+                    <p class="avis-author">- Sophie L.</p>
+                </div>
+
+                <div class="avis-card">
+                    <div class="avis-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="avis-text">"Portions généreuses et délicieuses. À refaire absolument!"</p>
+                    <p class="avis-author">- Jean P.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -141,68 +208,53 @@
          CONTACT SECTION
          ======================================== -->
     <section id="contact" class="contact-section">
-        <div class="section-header">
-            <h2>Nous Contacter</h2>
-            <div class="underline"></div>
-        </div>
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Nous Contacter</h2>
+            </div>
 
-        <div class="contact-container">
-            <div class="contact-info">
-                <div class="contact-item">
-                    <div class="contact-item-label">📍 Adresse</div>
-                    25 Rue Ambroise Croizat<br>
-                    78280 Guyancourt<br>
-                    Île-de-France, France
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">📍</div>
+                    <h3>Adresse</h3>
+                    <p>25 Rue Ambroise Croizat<br>78280 Guyancourt<br>Île-de-France, France</p>
                 </div>
 
-                <div class="contact-item">
-                    <div class="contact-item-label">📞 Téléphone</div>
-                    <a href="tel:+33981598314">09 81 59 83 14</a>
+                <div class="contact-card">
+                    <div class="contact-icon">📞</div>
+                    <h3>Téléphone</h3>
+                    <p><a href="tel:+33981598314">09 81 59 83 14</a></p>
                 </div>
 
-                <div class="contact-item">
-                    <div class="contact-item-label">⏰ Horaires</div>
-                    Lun-Ven: 11h30 - 14h30 | 17h00 - 21h00<br>
-                    Sam-Dim: 11h30 - 21h00
-                </div>
-
-                <div class="contact-item">
-                    <div class="contact-item-label">🍽️ Services</div>
-                    Sur place • À emporter • Livraison
+                <div class="contact-card">
+                    <div class="contact-icon">⏰</div>
+                    <h3>Horaires</h3>
+                    <p>Lun-Ven: 11h30-14h30 | 17h00-21h00<br>Sam-Dim: 11h30-21h00</p>
                 </div>
             </div>
 
-            <button class="btn btn-primary" style="width: 100%; margin-bottom: 2rem; justify-content: center; display: flex;">
-                Commander via WhatsApp
-            </button>
+            <button class="btn btn-primary btn-contact">Commander via WhatsApp</button>
         </div>
     </section>
 
     <!-- ========================================
          FOOTER
          ======================================== -->
-    <footer>
-        <p class="footer-highlight">TI MILO - SPÉCIALITÉS ANTILLAISES</p>
-        <p>Depuis Août 2024 • Guyancourt</p>
-        <p style="font-size: 0.95rem; margin-top: 1rem; opacity: 0.8;">
-            TIMILO SAS • SIREN 931 643 035 • Présidé par Jeffrey Isma
-        </p>
-
-        <div class="social-links">
-            <a href="https://facebook.com" target="_blank" title="Facebook">📘</a>
-            <a href="https://instagram.com" target="_blank" title="Instagram">📷</a>
-            <a href="https://wa.me/33981598314" target="_blank" title="WhatsApp">💬</a>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h4>Ti Milo</h4>
+                    <p>Spécialités Antillaises</p>
+                </div>
+                <div class="footer-links">
+                    <p>© 2024 Ti Milo. Tous droits réservés.</p>
+                </div>
+            </div>
         </div>
-
-        <p style="margin-top: 2rem; font-size: 0.85rem; opacity: 0.7;">
-            © 2024 Ti Milo. Tous droits réservés.
-        </p>
     </footer>
 
-    <!-- ========================================
-         JAVASCRIPT
-         ======================================== -->
-    <script src="script.js"></script>
-
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
 </body>
 </html>
