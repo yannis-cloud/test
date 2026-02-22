@@ -1,391 +1,467 @@
-/* ============================= */
-/* SMOOTH SCROLL INERTIA (Framer Motion style) */
-/* ============================= */
+/* ========================================
+   SCRIPT PRINCIPAL - Ti Milo Restaurant
+   ======================================== */
 
-let scrollTarget = window.scrollY;
-let scrollCurrent = window.scrollY;
-const scrollEase = 0.08;
+// ========================================
+// 1. SMOOTH SCROLL & NAVIGATION
+// ========================================
 
-function smoothScroll() {
-  scrollCurrent += (scrollTarget - scrollCurrent) * scrollEase;
-  
-  if (Math.abs(scrollTarget - scrollCurrent) < 0.5) {
-    scrollCurrent = scrollTarget;
-  }
-  
-  document.documentElement.style.setProperty('--scroll', scrollCurrent);
-  
-  requestAnimationFrame(smoothScroll);
-}
-
-window.addEventListener('scroll', () => {
-  scrollTarget = window.scrollY;
-});
-
-smoothScroll();
-
-/* ============================= */
-/* CURSOR GLOW WITH TRAIL */
-/* ============================= */
-
-const cursor = document.querySelector(".cursor");
-const cursorTrail = document.querySelector(".cursor-trail");
-
-let mouseX = 0;
-let mouseY = 0;
-let cursorX = 0;
-let cursorY = 0;
-
-document.addEventListener("mousemove", e => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  
-  cursorTrail.style.left = e.clientX + "px";
-  cursorTrail.style.top = e.clientY + "px";
-  cursorTrail.style.opacity = "1";
-});
-
-function animateCursor() {
-  const dx = mouseX - cursorX;
-  const dy = mouseY - cursorY;
-  
-  cursorX += dx * 0.1;
-  cursorY += dy * 0.1;
-  
-  cursor.style.left = cursorX + "px";
-  cursor.style.top = cursorY + "px";
-  
-  requestAnimationFrame(animateCursor);
-}
-
-animateCursor();
-
-// Enlarge cursor on hover
-document.querySelectorAll('a, button, .card, .tool').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.style.width = '350px';
-    cursor.style.height = '350px';
-  });
-  
-  el.addEventListener('mouseleave', () => {
-    cursor.style.width = '280px';
-    cursor.style.height = '280px';
-  });
-});
-
-/* ============================= */
-/* PROGRESSIVE TEXT TYPING EFFECT */
-/* ============================= */
-
-// Text appears progressively with CSS animation
-// The typewriter effect is handled by CSS @keyframes
-// No JavaScript needed for the main typing effect
-
-// But we can add sound effect or additional interactions here if needed
-const typewriterLine = document.querySelector('.typewriter-line');
-
-if (typewriterLine) {
-  // Add completion event
-  setTimeout(() => {
-    typewriterLine.style.borderRight = 'none';
-  }, 3000);
-}
-
-/* ============================= */
-/* REVEAL ON SCROLL */
-/* ============================= */
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach((entry, index) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => {
-        entry.target.classList.add("show");
-      }, index * 100);
-    }
-  });
-}, { threshold: 0.15 });
-
-document.querySelectorAll(".reveal").forEach(el => {
-  observer.observe(el);
-});
-
-/* ============================= */
-/* NAVBAR ACTIVE HIGHLIGHT */
-/* ============================= */
-
-const sections = document.querySelectorAll("section");
-const navLinks = document.querySelectorAll(".menu a");
-
-window.addEventListener("scroll", () => {
-  let current = "";
-  
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop - 200;
-    if (scrollY >= sectionTop) {
-      current = section.getAttribute("id");
-    }
-  });
-
-  navLinks.forEach(a => {
-    a.classList.remove("active");
-    if (a.getAttribute("href") === "#" + current) {
-      a.classList.add("active");
-    }
-  });
-});
-
-/* ============================= */
-/* PROGRESS BAR */
-/* ============================= */
-
-const progress = document.querySelector(".progress");
-
-window.addEventListener("scroll", () => {
-  const totalHeight = document.body.scrollHeight - window.innerHeight;
-  const progressHeight = (window.pageYOffset / totalHeight) * 100;
-  progress.style.width = progressHeight + "%";
-});
-
-/* ============================= */
-/* 3D TILT EFFECT ON CARDS */
-/* ============================= */
-
-const tiltElements = document.querySelectorAll("[data-tilt]");
-
-tiltElements.forEach(el => {
-  el.addEventListener("mousemove", handleTilt);
-  el.addEventListener("mouseleave", resetTilt);
-});
-
-function handleTilt(e) {
-  const rect = this.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  
-  const centerX = rect.width / 2;
-  const centerY = rect.height / 2;
-  
-  const rotateX = ((y - centerY) / centerY) * -10;
-  const rotateY = ((x - centerX) / centerX) * 10;
-  
-  this.style.transform = `
-    perspective(1000px) 
-    rotateX(${rotateX}deg) 
-    rotateY(${rotateY}deg) 
-    translateY(-8px)
-    scale3d(1.02, 1.02, 1.02)
-  `;
-  
-  // Update spotlight position
-  if (this.querySelector('.card-glow')) {
-    this.style.setProperty("--x", x + "px");
-    this.style.setProperty("--y", y + "px");
-  }
-}
-
-function resetTilt() {
-  this.style.transform = `
-    perspective(1000px) 
-    rotateX(0deg) 
-    rotateY(0deg) 
-    translateY(0px)
-    scale3d(1, 1, 1)
-  `;
-}
-
-/* ============================= */
-/* SPOTLIGHT EFFECT ON CARDS */
-/* ============================= */
-
-document.querySelectorAll(".spotlight, .card").forEach(card => {
-  card.addEventListener("mousemove", e => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🌴 Ti Milo Website Loaded');
     
-    card.style.setProperty("--x", x + "px");
-    card.style.setProperty("--y", y + "px");
-  });
-});
-
-/* ============================= */
-/* PARALLAX MESH BACKGROUND */
-/* ============================= */
-
-const mesh = document.querySelector(".mesh");
-
-window.addEventListener("scroll", () => {
-  const offset = window.scrollY * 0.3;
-  mesh.style.transform = `translateY(${offset}px)`;
-});
-
-/* ============================= */
-/* ENHANCED LOGO ANIMATION */
-/* ============================= */
-
-const logo = document.querySelector(".logo");
-
-if (logo) {
-  logo.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
+    // Smooth scroll for navigation links
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
     });
-  });
-}
-
-/* ============================= */
-/* SMOOTH ANCHOR LINKS */
-/* ============================= */
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener("click", function(e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute("href"));
-    
-    if (target) {
-      const offsetTop = target.offsetTop - 100;
-      
-      window.scrollTo({
-        top: offsetTop,
-        behavior: "smooth"
-      });
-    }
-  });
 });
 
-/* ============================= */
-/* ENHANCED STATS COUNTER ANIMATION */
-/* ============================= */
+// ========================================
+// 2. BUTTON INTERACTIONS
+// ========================================
 
-const statsObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const numbers = entry.target.querySelectorAll('.stat-number');
-      
-      numbers.forEach(num => {
-        const target = parseInt(num.getAttribute('data-target'));
-        let current = 0;
-        const increment = target / 60;
-        const duration = 2000;
-        const stepTime = duration / 60;
+// CTA Buttons - Menu
+document.addEventListener('DOMContentLoaded', function() {
+    const menuBtn = document.querySelector('.cta-buttons .btn-primary');
+    if (menuBtn) {
+        menuBtn.addEventListener('click', function() {
+            const menuSection = document.getElementById('menu');
+            if (menuSection) {
+                menuSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+
+    // CTA Buttons - Contact
+    const contactBtn = document.querySelector('.cta-buttons .btn-secondary');
+    if (contactBtn) {
+        contactBtn.addEventListener('click', function() {
+            const contactSection = document.getElementById('contact');
+            if (contactSection) {
+                contactSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+});
+
+// ========================================
+// 3. ACTIVE NAV INDICATOR
+// ========================================
+
+window.addEventListener('scroll', function() {
+    const navLinks = document.querySelectorAll('.nav-links a');
+    let currentSection = '';
+
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
         
-        const counter = setInterval(() => {
-          current += increment;
-          if (current >= target) {
-            if (target === 100) {
-              num.textContent = target + "%";
-            } else {
-              num.textContent = target + "+";
-            }
-            clearInterval(counter);
-          } else {
-            if (target === 100) {
-              num.textContent = Math.floor(current) + "%";
-            } else {
-              num.textContent = Math.floor(current) + "+";
-            }
-          }
-        }, stepTime);
-      });
-      
-      statsObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.3 });
-
-const heroStats = document.querySelector('.hero-stats');
-if (heroStats) {
-  statsObserver.observe(heroStats);
-}
-
-/* ============================= */
-/* DYNAMIC GRADIENT MESH ANIMATION */
-/* ============================= */
-
-let meshTime = 0;
-
-function animateMesh() {
-  meshTime += 0.001;
-  
-  const mesh = document.querySelector('.mesh');
-  if (mesh) {
-    const rotation = Math.sin(meshTime) * 10;
-    mesh.style.filter = `blur(${120 + Math.sin(meshTime * 2) * 20}px) hue-rotate(${rotation}deg)`;
-  }
-  
-  requestAnimationFrame(animateMesh);
-}
-
-animateMesh();
-
-/* ============================= */
-/* PERFORMANCE OPTIMIZATION */
-/* ============================= */
-
-// Debounce function for scroll events
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-}
-
-// Lazy load images
-const imageObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const img = entry.target;
-      if (img.dataset.src) {
-        img.src = img.dataset.src;
-        img.removeAttribute('data-src');
-      }
-      observer.unobserve(img);
-    }
-  });
-});
-
-document.querySelectorAll('img[data-src]').forEach(img => {
-  imageObserver.observe(img);
-});
-
-/* ============================= */
-/* KEYBOARD NAVIGATION */
-/* ============================= */
-
-document.addEventListener('keydown', (e) => {
-  // ESC to scroll to top
-  if (e.key === 'Escape') {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+        if (window.pageYOffset >= sectionTop - 200) {
+            currentSection = section.getAttribute('id');
+        }
     });
-  }
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + currentSection) {
+            link.classList.add('active');
+        }
+    });
 });
 
-/* ============================= */
-/* CONSOLE EASTER EGG */
-/* ============================= */
+// ========================================
+// 4. MENU CARD INTERACTIONS
+// ========================================
 
-console.log(`
-%c
-  ╔═══════════════════════════════════════╗
-  ║                                       ║
-  ║   👋 Hi! I'm Yannis Albert           ║
-  ║   📊 Data, Analytics & AI Engineer   ║
-  ║   🚀 Building data-driven solutions  ║
-  ║                                       ║
-  ║   📧 yannis.albert78@gmail.com       ║
-  ║   💼 Open to opportunities           ║
-  ║                                       ║
-  ╚═══════════════════════════════════════╝
-`,
-'color: #2A7BFF; font-family: monospace; font-size: 12px; font-weight: bold;'
-);
+document.addEventListener('DOMContentLoaded', function() {
+    const menuCards = document.querySelectorAll('.menu-card');
+    
+    menuCards.forEach((card, index) => {
+        // Hover effects
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-15px)';
+            const emoji = this.querySelector('.menu-emoji');
+            if (emoji) {
+                emoji.style.animation = 'floatRotate 0.6s ease-in-out';
+            }
+        });
 
-console.log('%cLiked what you see? Let\'s connect! 🤝', 'color: #00D4FF; font-size: 16px; font-weight: bold;');
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+
+        // Click to select
+        card.addEventListener('click', function() {
+            const title = this.querySelector('h3').textContent;
+            console.log(`📍 Selected: ${title}`);
+            this.style.borderColor = 'var(--accent-lime)';
+            
+            setTimeout(() => {
+                this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            }, 1000);
+        });
+    });
+});
+
+// ========================================
+// 5. ABOUT CARD ANIMATIONS
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const aboutCards = document.querySelectorAll('.about-card');
+    
+    aboutCards.forEach((card, index) => {
+        card.addEventListener('mouseenter', function() {
+            const icon = this.querySelector('.about-icon');
+            if (icon) {
+                icon.style.animation = 'rotateIcon 0.8s ease-in-out';
+            }
+        });
+
+        card.addEventListener('mouseleave', function() {
+            const icon = this.querySelector('.about-icon');
+            if (icon) {
+                icon.style.animation = 'floatRotate 4s ease-in-out infinite';
+            }
+        });
+    });
+});
+
+// ========================================
+// 6. LAZY LOADING ANIMATIONS
+// ========================================
+
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            // Ajouter des animations à la première visite
+            if (!entry.target.hasAttribute('data-animated')) {
+                entry.target.setAttribute('data-animated', 'true');
+            }
+        }
+    });
+}, observerOptions);
+
+document.addEventListener('DOMContentLoaded', function() {
+    const fadeElements = document.querySelectorAll('.fade-in-on-scroll');
+    fadeElements.forEach(el => observer.observe(el));
+});
+
+// ========================================
+// 7. SCROLL TO TOP BUTTON
+// ========================================
+
+function createScrollToTopButton() {
+    const button = document.createElement('button');
+    button.innerHTML = '↑';
+    button.className = 'scroll-to-top';
+    button.style.cssText = `
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, var(--accent-orange), var(--accent-pink));
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.5rem;
+        display: none;
+        z-index: 999;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 20px rgba(255, 87, 34, 0.4);
+    `;
+
+    document.body.appendChild(button);
+
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            button.style.display = 'flex';
+            button.style.alignItems = 'center';
+            button.style.justifyContent = 'center';
+        } else {
+            button.style.display = 'none';
+        }
+    });
+
+    button.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    button.addEventListener('mouseenter', function() {
+        this.style.transform = 'scale(1.2)';
+        this.style.boxShadow = '0 10px 40px rgba(255, 87, 34, 0.7)';
+    });
+
+    button.addEventListener('mouseleave', function() {
+        this.style.transform = 'scale(1)';
+        this.style.boxShadow = '0 5px 20px rgba(255, 87, 34, 0.4)';
+    });
+}
+
+document.addEventListener('DOMContentLoaded', createScrollToTopButton);
+
+// ========================================
+// 8. PHONE NUMBER CLICK
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+    
+    phoneLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            console.log('📞 Calling: ' + this.getAttribute('href'));
+        });
+
+        link.addEventListener('mouseenter', function() {
+            this.style.fontSize = '1.2rem';
+            this.style.color = 'var(--accent-lime)';
+        });
+
+        link.addEventListener('mouseleave', function() {
+            this.style.fontSize = '1.1rem';
+            this.style.color = 'var(--accent-cyan)';
+        });
+    });
+});
+
+// ========================================
+// 9. FORM INTERACTIONS (si ajout futur)
+// ========================================
+
+function setupFormInteractions() {
+    const forms = document.querySelectorAll('form');
+    
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('📧 Form submitted');
+            
+            // Ajouter ici la logique d'envoi du formulaire
+            alert('Merci pour votre message! Nous vous recontacterons bientôt.');
+            form.reset();
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', setupFormInteractions);
+
+// ========================================
+// 10. RESPONSIVE MENU TOGGLE
+// ========================================
+
+function setupMobileMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    
+    // Créer un bouton hamburger pour mobile
+    const header = document.querySelector('header');
+    const hamburger = document.createElement('button');
+    hamburger.innerHTML = '☰';
+    hamburger.className = 'hamburger-menu';
+    hamburger.style.cssText = `
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+    `;
+
+    // Insérer avant les nav-links
+    if (navLinks) {
+        navLinks.parentElement.insertBefore(hamburger, navLinks);
+    }
+
+    // Afficher le hamburger sur mobile
+    function updateMenuVisibility() {
+        if (window.innerWidth <= 768) {
+            hamburger.style.display = 'block';
+        } else {
+            hamburger.style.display = 'none';
+            navLinks.style.display = 'flex';
+        }
+    }
+
+    updateMenuVisibility();
+    window.addEventListener('resize', updateMenuVisibility);
+
+    hamburger.addEventListener('click', function() {
+        if (navLinks.style.display === 'none' || navLinks.style.display === '') {
+            navLinks.style.display = 'flex';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '100%';
+            navLinks.style.left = '0';
+            navLinks.style.right = '0';
+            navLinks.style.background = 'rgba(10, 10, 10, 0.95)';
+            navLinks.style.padding = '1rem';
+            navLinks.style.zIndex = '999';
+        } else {
+            navLinks.style.display = 'none';
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', setupMobileMenu);
+
+// ========================================
+// 11. CONTACT BUTTON ACTION
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const commandBtn = document.querySelector('.contact-section .btn-primary');
+    if (commandBtn) {
+        commandBtn.addEventListener('click', function() {
+            const phone = '33981598314';
+            const message = 'Bonjour, je suis intéressé par votre menu!';
+            const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappUrl, '_blank');
+        });
+    }
+});
+
+// ========================================
+// 12. ANIMATIONS AU SCROLL
+// ========================================
+
+function addScrollAnimations() {
+    const sections = document.querySelectorAll('section');
+    
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animation = 'slideInMassive 0.8s ease-out';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    sections.forEach(section => {
+        scrollObserver.observe(section);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', addScrollAnimations);
+
+// ========================================
+// 13. EFFECT PARTICULES AU HOVER (OPTIONNEL)
+// ========================================
+
+function addParticleEffects() {
+    const buttons = document.querySelectorAll('.btn');
+    
+    buttons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Créer un effet de ripple
+            const ripple = document.createElement('span');
+            ripple.style.cssText = `
+                position: absolute;
+                left: ${x}px;
+                top: ${y}px;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.5);
+                pointer-events: none;
+                animation: rippleEffect 0.6s ease-out;
+            `;
+            
+            this.style.position = 'relative';
+            this.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', addParticleEffects);
+
+// ========================================
+// 14. LOG DE INTERACTIONS
+// ========================================
+
+window.addEventListener('load', function() {
+    console.log('%c🌴 Ti Milo - Spécialités Antillaises', 'color: #FF5722; font-size: 20px; font-weight: bold;');
+    console.log('%cBienvenue sur le site web de Ti Milo!', 'color: #00D9FF; font-size: 14px;');
+    console.log('%cAdresse: 25 Rue Ambroise Croizat, 78280 Guyancourt', 'color: #00FF41;');
+    console.log('%cTéléphone: 09 81 59 83 14', 'color: #FFD60A;');
+});
+
+// ========================================
+// 15. SUPPORT ÉVÉNEMENTS CLAVIER
+// ========================================
+
+document.addEventListener('keydown', function(e) {
+    // Raccourci clavier pour revenir à l'accueil (Home key)
+    if (e.key === 'Home') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    // Raccourci pour aller au contact (C key)
+    if (e.key === 'c' || e.key === 'C') {
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    // Raccourci pour aller au menu (M key)
+    if (e.key === 'm' || e.key === 'M') {
+        const menuSection = document.getElementById('menu');
+        if (menuSection) {
+            menuSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+});
+
+// ========================================
+// 16. PERFORMANCE & OPTIMISATION
+// ========================================
+
+// Throttle function pour optimiser les événements
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+}
+
+// Appliquer throttle au scroll
+window.addEventListener('scroll', throttle(function() {
+    // Vos événements scroll optimisés ici
+}, 100));
+
+console.log('✅ Tous les scripts sont chargés avec succès!');
